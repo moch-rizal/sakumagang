@@ -1,0 +1,6 @@
+{
+  "name": "Uang Saku MagangHub",
+  "description": "Pengelola uang saku magang MagangHub pribadi dengan pelacakan anggaran dan pengeluaran harian.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
