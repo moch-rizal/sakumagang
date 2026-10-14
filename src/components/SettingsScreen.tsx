@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { WalletSettings } from '../types';
 import { formatRupiah, formatPercentage } from '../utils/formatters';
-import { RotateCcw, Check, Sparkles, Github, Code2, Heart, Rocket } from 'lucide-react';
+import { RotateCcw, Check, Sparkles, Github, Code2, Heart, Rocket, RefreshCw } from 'lucide-react';
+
+const BIO_QUOTES = [
+  "Duit saku aja dijagain biar gak minus, apalagi hati kamu? Eaaa 🤭",
+  "Suka bikin hal-hal kecil yang bikin hidup sehari-hari jadi lebih teratur.",
+  "Barangsiapa mempermudah urusan orang lain, Allah akan mempermudah urusannya di dunia dan akhirat. (HR. Muslim)",
+  "Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain. (HR. Ahmad)",
+];
 
 interface SettingsScreenProps {
   settings: WalletSettings;
@@ -32,6 +39,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
   const [period, setPeriod] = useState(settings.monthPeriod);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [quoteIndex, setQuoteIndex] = useState(() => Math.floor(Math.random() * BIO_QUOTES.length));
 
   const numericAllowance = parseInt(rawAllowance.replace(/\D/g, ''), 10) || 0;
 
@@ -294,10 +302,20 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
           </span>
         </div>
 
-        {/* Bio Singkat */}
-        <p className="text-xs text-[#57534E] leading-relaxed bg-white/70 p-2.5 rounded-xl border border-[#E7E2D8]/70">
-          "Udah pinter ngatur duit, sekarang tinggal cari jodoh yang tepat biar masa depannya makin aman, hehe ✌️"
-        </p>
+        {/* Bio Singkat (Bisa Diklik & Berubah Otomatis/Manual) */}
+        <button
+          type="button"
+          onClick={() => setQuoteIndex((prev) => (prev + 1) % BIO_QUOTES.length)}
+          className="w-full text-left group text-xs text-[#57534E] leading-relaxed bg-white/70 hover:bg-white p-2.5 rounded-xl border border-[#E7E2D8]/70 hover:border-[#1B4931]/30 transition-all cursor-pointer relative"
+          title="Klik untuk ganti quote"
+        >
+          <div className="flex items-start justify-between gap-2">
+            <p className="flex-1 italic">
+              "{BIO_QUOTES[quoteIndex]}"
+            </p>
+            <RefreshCw className="w-3 h-3 text-[#A8A29E] group-hover:text-[#1B4931] group-hover:rotate-180 transition-all shrink-0 mt-0.5" />
+          </div>
+        </button>
 
         {/* Next Project Teaser */}
         <div className="p-2.5 rounded-xl bg-white/60 border border-[#E7E2D8] space-y-1">
